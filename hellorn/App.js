@@ -1,4 +1,57 @@
-import { StyleSheet, View,Text as RNText} from "react-native";
+import {View, StyleSheet ,SafeAreaView} from "react-native";
+import React, { useState } from "react";
+import { lightTheme,darkTheme } from "./theme";
+import { ThemeProvider, useTheme } from "@rneui/themed";
+import RNEText from "./src/RNEText";
+import RNEButton from "./src/RNEButton";
+
+const App = () => {
+  const [theme, setTheme] = useState(lightTheme);
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) =>
+      prevTheme.mode === "light" ? darkTheme : lightTheme
+    );
+  };
+
+  return (
+    <ThemeProvider theme={theme}>
+      <ThemedScreen toggleTheme={toggleTheme} />
+    </ThemeProvider>
+  );
+};
+
+export default App;
+
+const ThemedScreen = ({ toggleTheme }) => {
+  const { theme } = useTheme();
+
+  return (
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
+      <RNEText level={3} style={styles.heading}>
+        RNEUI Merkezi Tema Yönetimi 🚀
+      </RNEText>
+      <RNEButton title="Temayı Değiştir" onPress={toggleTheme} />
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  heading: {
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+});
+
+/*import { StyleSheet, View,Text as RNText} from "react-native";
 import React, { useState } from "react";
 import { Button, createTheme, Input, Text, ThemeProvider } from "@rneui/themed";
 
@@ -64,7 +117,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
+*/
 /*import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Counter from './src/Counter';
